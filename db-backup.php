@@ -21,32 +21,73 @@
 	$downloadOK = false;
 
 	if ($_SERVER['REQUEST_METHOD'] === 'GET'){
-		if ($_GET[action] == null) {
+
+			/* a for action, u for username, p for password */
+
+		if ($_GET[a] == null) {
 			$html = "
 				<html>
 					<head>
 						<title>
 							Potatoes Backup Restore
 						</title>
+						<style>
+							h1, h2, h3, h4, h5 {
+								padding: 1em;
+								text-align: center;
+							}
+							#loginForm {
+								display: block;
+								padding: 5em;
+								border: 1px solid black;
+								border-radius: 5px;
+								max-width: 20em;
+								margin: 0 auto;
+							}
+							#loginForm .row {
+								display: block;
+								padding: 1em;
+								top: .5em;
+							}
+							#loginForm .button input {
+								background-color: white;
+								margin: 0 auto;
+							}
+							#loginForm .button input:hover {
+								background-color: black;
+								color: white;
+								cursor: pointer;
+							}
+							#loginForm .row input {
+								border: 1px solid black;
+								padding: 5px;
+								font-size: 1em;
+								float: right;
+							}
+						</style>
 					</head>
 					<body>
 						<h2> Data Backup </h2>
-						<h4> Administrator Login </h4>
-						<form action='db-backup.php' method='post'>
-							Username: <input type='text' name='username'> <br/>
-							Password: <input type='password' name='password'> <br/>
-							<input type='submit' value='Login'>
+						<h3> Administrator Login </h3>
+						<form action='db-backup.php' method='post' id='loginForm'>
+							<span class='row'> Username: <input type='text' name='username'> </span>
+							<span class='row'> Password: <input type='password' name='password'> </span>
+							<span class='row button'> <input type='submit' value='Login'> </span>
 						</form>
 					</body>
 				</html>
 			";
+			echo $html;
 		}
-
-		elseif ($_GET[action] == 'download' && $_GET[username] == $login_user && $_GET[password] == $login_pass){
+		elseif ($_GET[a] == 'download' && $_GET[u] == $login_user && $_GET[p] == $login_pass){
 			export_data($conn);
 		}
+		elseif ($_GET[a] == 'restore' && $_GET[u] == $login_user && $_GET[p] == $login_pass){
+			$html = "
 
-		echo $html;
+			";
+			echo $html;
+		}
 	}
 
 	if ($_SERVER['REQUEST_METHOD'] === 'POST'){
@@ -58,32 +99,50 @@
 						<title>
 							Potatoes Backup Restore
 						</title>
-						<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+						<style>
+							h1, h2, h3, h4, h5 {
+								padding: 1em;
+								text-align: center;
+							}
+							#actions {
+								display: block;
+								padding: 5em;
+								border: 1px solid black;
+								border-radius: 5px;
+								max-width: 17em;
+								margin: 0 auto;
+							}
+							#buttons {
+								display: flex;
+								margin: 0 auto;
+							}
+							#actions a {
+								display: inline-block;
+								width: 5em;
+								text-align: center;
+								padding: 10px;
+								margin: 0 auto;
+								text-decoration: none;
+								border: 1px solid black;
+								border-radius: 5px;
+								color: black;
+							}
+							#actions a:hover{
+								background-color: black;
+								color: white;
+							}
+						</style>
 					</head>
 					<body>
-						<div id='current-user' style='display:none'>
-							<span id='username'> $_POST[username] </span>
-							<span id='password'> $_POST[password] </span>
-						</div>
-						<div id='actions'> 
-							<button id='download'> Download </button>
-							<button id='restore'> Restore </button>
-						</div>
-						<script>
-							$(document).ready(()=> {
-								var user = $.trim($('#username').text());
-								var pass = $.trim($('#password').text());
-								$('#download').on('click', () => {
-									$.ajax({
-										method: 'GET',
-										url: 'db-backup.php',
-										data: {'username': user, 'password': pass, 'action': 'download'},
-									});
 
-									alert('>' + user + '<>' + pass + '<');
-								});
-							});
-						</script>
+						<h2> Data Backup </h2>
+						<h3> You are logged in as: $_POST[username] </h3>
+						<div id='actions'> 
+							<div id='buttons'>
+							<a href='db-backup.php?u=$_POST[username]&p=$_POST[password]&a=download'>Download</a>
+							<a href='db-backup.php?u=$_POST[username]&p=$_POST[password]&a=restore'>Restore</a>
+							</div>
+						</div>
 					</body>
 				</html>
 			";
