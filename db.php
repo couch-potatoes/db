@@ -1,14 +1,19 @@
 <?php
 
+	error_reporting(0);
+
  	header('Access-Control-Allow-Origin: *');
 
+ 		//use environment variables from Heroku
  	$servername = getenv(servername);
  	$username = getenv(username);
  	$password = getenv(password);
  	$database = getenv(database);
 
+ 		//use login.php for local
  	include 'login.php';
 
+ 		//sql connection information
 	$conn = new mysqli($servername, $username, $password, $database);
 
 		//handle POST requests from clients
@@ -52,7 +57,7 @@
 
 				//connect to sql server
 			if ($conn->connect_error) {
-				header('HTTP/1.1 503 Cannot Connecting to Database Server');
+				header('HTTP/1.1 503 Cannot Connect to Database Server');
 			}
 			else {
 
@@ -120,7 +125,7 @@
 
 				//connect to mysql server
 	      	if ($conn->connect_error) {
-				header('HTTP/1.1 503 Cannot Connecting to Database Server');
+				header('HTTP/1.1 503 Cannot Connect to Database Server');
 	      	}
 
 	      		//receive sql reply
