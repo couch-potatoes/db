@@ -1,0 +1,35 @@
+<html>
+<head> 
+	<title> DB Test </title>
+	<script src="./js/jquery.min.js"></script>
+</head>
+<body>
+	<p>
+
+	</p>
+	<script>
+		var count = 0;
+		$.ajax({
+			method: "POST",
+			url: "./db.php", 
+			data: {"ineed" : "all"}, 
+			dataType: "json",
+			success: function(data){
+				$.each(data, function(row, col) {
+					count++;
+					$("p").append("<hr/>" + count + "<hr/>");	
+					$.each(col, function(k, v){
+						$("p").append(k + ":" + v + " <br/> ");
+					});
+				});
+				console.log("Server Replies: >" + data + "<");
+			},
+			error: function(e){
+				$("p").text("Error " + e);
+			}
+		}).done(function () {
+			console.log("Done!");
+		});
+	</script>
+</body>
+</html>
