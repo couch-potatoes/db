@@ -18,82 +18,222 @@
 
  		//sql connection information
 	$conn = new mysqli($servername, $username, $password, $database);
-	$downloadOK = false;
+
+
 
 	if ($_SERVER['REQUEST_METHOD'] === 'GET'){
-
-			/* a for action, u for username, p for password */
-
-		if ($_GET[a] == null) {
-			$html = "
-				<html>
-					<head>
-						<title>
-							Potatoes Backup Restore
-						</title>
-						<style>
-							h1, h2, h3, h4, h5 {
-								padding: 1em;
-								text-align: center;
-							}
-							#loginForm {
-								display: block;
-								padding: 5em;
-								border: 1px solid black;
-								border-radius: 5px;
-								max-width: 20em;
-								margin: 0 auto;
-							}
-							#loginForm .row {
-								display: block;
-								padding: 1em;
-								top: .5em;
-							}
-							#loginForm .button input {
-								background-color: white;
-								margin: 0 auto;
-							}
-							#loginForm .button input:hover {
-								background-color: black;
-								color: white;
-								cursor: pointer;
-							}
-							#loginForm .row input {
-								border: 1px solid black;
-								padding: 5px;
-								font-size: 1em;
-								float: right;
-							}
-						</style>
-					</head>
-					<body>
-						<h2> Data Backup </h2>
-						<h3> Administrator Login </h3>
-						<form action='db-backup.php' method='post' id='loginForm'>
-							<span class='row'> Username: <input type='text' name='username'> </span>
-							<span class='row'> Password: <input type='password' name='password'> </span>
-							<span class='row button'> <input type='submit' value='Login'> </span>
-						</form>
-					</body>
-				</html>
-			";
-			echo $html;
-		}
-		elseif ($_GET[a] == 'download' && $_GET[u] == $login_user && $_GET[p] == $login_pass){
-			export_data($conn);
-		}
-		elseif ($_GET[a] == 'restore' && $_GET[u] == $login_user && $_GET[p] == $login_pass){
-			$html = "
-
-			";
-			echo $html;
-		}
+		$html = "
+			<html>
+				<head>
+					<title>
+						Potatoes Backup Restore
+					</title>
+					<style>
+						h1, h2, h3, h4, h5 {
+							padding: 1em;
+							text-align: center;
+						}
+						#loginForm {
+							display: block;
+							padding: 5em;
+							border: 1px solid black;
+							border-radius: 5px;
+							max-width: 20em;
+							margin: 0 auto;
+						}
+						#loginForm .row {
+							display: block;
+							padding: 1em;
+							top: .5em;
+						}
+						#loginForm .button input {
+							background-color: white;
+							margin: 0 auto;
+						}
+						#loginForm .button input:hover {
+							background-color: black;
+							color: white;
+							cursor: pointer;
+						}
+						#loginForm .row input {
+							border: 1px solid black;
+							border-radius: 2px;
+							padding: 5px;
+							font-size: 1em;
+							float: right;
+						}
+					</style>
+				</head>
+				<body>
+					<h2> Data Backup </h2>
+					<h3> Administrator Login </h3>
+					<form action='db-backup.php' method='post' id='loginForm'>
+						<input type='hidden' name='action' value='login'>
+						<span class='row'> Username: <input type='text' name='username'> </span>
+						<span class='row'> Password: <input type='password' name='password'> </span>
+						<span class='row button'> <input type='submit' value='Login'> </span>
+					</form>
+				</body>
+			</html>
+		";
+		echo $html;
 	}
 
 	if ($_SERVER['REQUEST_METHOD'] === 'POST'){
 
 		if ($_POST[username] == $login_user && $_POST[password] == $login_pass){
-			$html = "
+			if ($_POST[action] == 'login') {
+				$html = "
+					<html>
+						<head>
+							<title>
+								Potatoes Backup Restore
+							</title>
+							<style>
+								h1, h2, h3, h4, h5 {
+									padding: 1em;
+									text-align: center;
+								}
+								#actions {
+									display: block;
+									padding: 5em;
+									border: 1px solid black;
+									border-radius: 5px;
+									max-width: 20em;
+									margin: 0 auto;
+								}
+								#actions .button {
+									display: block;
+									width: 15em;
+									text-align: center;
+									font-size: 1em;
+									padding: 10px;
+									margin: 0 auto;
+									background-color: white;
+									border: 1px solid black;
+									border-radius: 5px;
+									color: black;
+								}
+								#actions .button:hover{
+									background-color: black;
+									color: white;
+									cursor: pointer;
+								}
+							</style>
+						</head>
+						<body>
+
+							<h2> Data Backup </h2>
+							<h3> You are logged in as: $_POST[username] <br/><br/>
+							<a href='db-backup.php'> <button> Log Out </button> </a>
+							</h3>
+							<div id='actions'> 
+								<div id='buttons'>
+									<form action='db-backup.php' method='post'>
+										<input type='hidden' name='username' value='$_POST[username]'>
+										<input type='hidden' name='password' value='$_POST[password]'>
+										<input type='hidden' name='action' value='download'>
+										<input type='submit' value='Download Data Backup' class='button'>
+									</form>
+									<form action='db-backup.php' method='post'>
+										<input type='hidden' name='username' value='$_POST[username]'>
+										<input type='hidden' name='password' value='$_POST[password]'>
+										<input type='hidden' name='action' value='restore'>
+										<input type='submit' value='Restore Data Backup' class='button'>
+									</form>
+								</div>
+							</div>
+						</body>
+					</html>
+				";
+
+				echo $html;
+			}
+			elseif ($_POST[action] == 'download'){
+				export_data($conn);
+			}
+			elseif ($_POST[action] == 'restore'){
+				$html = "
+					<html>
+						<head>
+							<title>
+								Potatoes Backup Restore
+							</title>
+							<style>
+								h1, h2, h3, h4, h5 {
+									padding: 1em;
+									text-align: center;
+								}
+								#restoreForm {
+									display: block;
+									padding: 5em;
+									padding-top: 2em !important;
+									border: 1px solid black;
+									border-radius: 5px;
+									max-width: 20em;
+									margin: 0 auto;
+								}
+								#restoreForm .row, 
+								#back .row
+								{
+									display: flex;
+									padding: 1em;
+									top: .5em;
+								}
+								#restoreForm .button input, 
+								#back .button input
+								{
+									background-color: white;
+									margin: 0 auto;
+								}
+								#restoreForm .button input:hover,
+								#back .button input:hover {
+									background-color: black;
+									color: white;
+									cursor: pointer;
+								}
+								#restoreForm .row input,
+								#back .row input
+								{
+									max-width: 18em;
+									border: 1px solid black;
+									border-radius: 2px;
+									padding: 5px;
+									font-size: 1em;
+									float: right;
+								}
+							</style>
+						</head>
+						<body>
+							<h2> Data Backup </h2>
+							<h3> Restore Backup </h3>
+							<form action='db-backup.php' method='post' id='back'>
+								<input type='hidden' name='action' value='login'>
+								<input type='hidden' name='username' value='$_POST[username]'>
+								<input type='hidden' name='password' value='$_POST[password]'>
+								<span class='row button'> <input type='submit' value='Back'> </span>
+							</form>
+							<form action='db-backup.php' method='post' id='restoreForm'>
+								<h4> Choose a backup file and restore. <br/>(extention must be .sql or .potatoe) </h4>
+
+								<input type='hidden' name='action' value='restore-file'>
+								<input type='hidden' name='username' value='$_POST[username]'>
+								<input type='hidden' name='password' value='$_POST[password]'>
+								<span class='row'> <input type='file' name='backup_file' accept='.sql, .potatoe'> </span>
+								<span class='row button'> <input type='submit' value='Restore'> </span>
+							</form>
+						</body>
+					</html>
+				";
+
+				echo $html;
+			}
+			elseif ($_POST[action] == 'restore-file'){
+				echo "Hi there";
+			}
+		}
+		else {
+			$html =	"
 				<html>
 					<head>
 						<title>
@@ -109,7 +249,7 @@
 								padding: 5em;
 								border: 1px solid black;
 								border-radius: 5px;
-								max-width: 17em;
+								max-width: 20em;
 								margin: 0 auto;
 							}
 							#buttons {
@@ -136,11 +276,10 @@
 					<body>
 
 						<h2> Data Backup </h2>
-						<h3> You are logged in as: $_POST[username] </h3>
 						<div id='actions'> 
+							<h3> Error! </br> Invalid Username or Password </h3>
 							<div id='buttons'>
-							<a href='db-backup.php?u=$_POST[username]&p=$_POST[password]&a=download'>Download</a>
-							<a href='db-backup.php?u=$_POST[username]&p=$_POST[password]&a=restore'>Restore</a>
+								<a href='db-backup.php'>Retry</a>
 							</div>
 						</div>
 					</body>
@@ -148,9 +287,6 @@
 			";
 
 			echo $html;
-		}
-		else {
-			echo "Incorrect";
 		}
 	}
 
