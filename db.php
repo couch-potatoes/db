@@ -229,7 +229,9 @@
 
 							//force download
 						$fp = fopen('php://output', 'w');
-
+						
+						fputcsv($fp, ["From $startDate To $endDate | Gender: ". strtoupper($gender) ." | Sport(s): ". strtoupper($sport)]);
+							
 							//add data
 						foreach($result as $row){
 							fputcsv($fp, $row);
@@ -358,6 +360,8 @@
 
 							//force download
 						$fp = fopen('php://output', 'w');
+
+						fputcsv($fp, ["From $startDate To $endDate | Gender: ". strtoupper($gender) ." | Sport(s): ". strtoupper($sport)]);
 
 							//put data in CSV file
 						foreach($result as $row){
