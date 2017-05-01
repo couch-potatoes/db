@@ -19,8 +19,7 @@
  		//sql connection information
 	$conn = new mysqli($servername, $username, $password, $database);
 
-
-
+		//if broswer request with GET method (normal web page view method)
 	if ($_SERVER['REQUEST_METHOD'] === 'GET'){
 		$html = "
 			<html>
@@ -78,16 +77,19 @@
 		";
 		echo $html;
 	}
-
+		//if front end sends request with POST method
 	if ($_SERVER['REQUEST_METHOD'] === 'POST'){
 
+			//valid username and password
 		if ($_POST[username] == $login_user && $_POST[password] == $login_pass){
+
+				//request to show login page
 			if ($_POST[action] == 'login') {
 				$html = "
 					<html>
 						<head>
 							<title>
-								Potatoes Backup Restore
+								Potatoes Backup-Restore
 							</title>
 							<style>
 								h1, h2, h3, h4, h5 {
@@ -123,7 +125,7 @@
 						</head>
 						<body>
 
-							<h2> Data Backup </h2>
+							<h2> Potatoes Data Backup </h2>
 							<h3> You are logged in as: $_POST[username] <br/><br/>
 							<a href='db-backup.php'> <button> Log Out </button> </a>
 							</h3>
@@ -149,15 +151,18 @@
 
 				echo $html;
 			}
+				//request to Download data file
 			elseif ($_POST[action] == 'download'){
 				export_data($conn);
 			}
+
+				//if action is to show Restore page
 			elseif ($_POST[action] == 'restore'){
 				$html = "
 					<html>
 						<head>
 							<title>
-								Potatoes Backup Restore
+								Potatoes Backup-Restore
 							</title>
 							<style>
 								h1, h2, h3, h4, h5 {
@@ -205,7 +210,7 @@
 							</style>
 						</head>
 						<body>
-							<h2> Data Backup </h2>
+							<h2> Potatoes Data Backup </h2>
 							<h3> Restore Backup </h3>
 							<form action='db-backup.php' method='post' id='back'>
 								<input type='hidden' name='action' value='login'>
@@ -214,12 +219,91 @@
 								<span class='row button'> <input type='submit' value='Back'> </span>
 							</form>
 							<form action='db-backup.php' method='post' id='restoreForm'>
-								<h4> Choose a backup file and restore. <br/>(extention must be .sql or .potatoe) </h4>
+								<h4> Upload a backup file to restore. <br/>(extention must be .sql or .potatoe) </h4>
 
-								<input type='hidden' name='action' value='restore-file'>
+								<input type='hidden' name='action' value='upload-file'>
 								<input type='hidden' name='username' value='$_POST[username]'>
 								<input type='hidden' name='password' value='$_POST[password]'>
-								<span class='row'> <input type='file' name='backup_file' accept='.sql, .potatoe'> </span>
+								<span class='row'> <input type='file' name='backup_file' id='backup_file' accept='.sql, .potatoe, .jpg, .png'> </span>
+								<span class='row button'> <input type='submit' name='submit' value='Upload'> </span>
+							</form>
+						</body>
+					</html>
+				";
+
+				echo $html;
+			}
+				//if action is to restore the file
+			elseif ($_POST[action] == 'upload-file'){
+
+				$uploadInfo = "No File Uploaded!";
+
+				$html = "
+					<html>
+						<head>
+							<title>
+								Potatoes Backup-Restore
+							</title>
+							<style>
+								h1, h2, h3, h4, h5 {
+									padding: 1em;
+									text-align: center;
+								}
+								#restoreForm {
+									display: block;
+									padding: 5em;
+									padding-top: 2em !important;
+									border: 1px solid black;
+									border-radius: 5px;
+									max-width: 20em;
+									margin: 0 auto;
+								}
+								#restoreForm .row, 
+								#back .row
+								{
+									display: flex;
+									padding: 1em;
+									top: .5em;
+								}
+								#restoreForm .button input, 
+								#back .button input
+								{
+									background-color: white;
+									margin: 0 auto;
+								}
+								#restoreForm .button input:hover,
+								#back .button input:hover {
+									background-color: black;
+									color: white;
+									cursor: pointer;
+								}
+								#restoreForm .row input,
+								#back .row input
+								{
+									max-width: 18em;
+									border: 1px solid black;
+									border-radius: 2px;
+									padding: 5px;
+									font-size: 1em;
+									float: right;
+								}
+							</style>
+						</head>
+						<body>
+							<h2> Potatoes Data Backup </h2>
+							<h3> Restore Backup </h3>
+							<form action='db-backup.php' method='post' id='back'>
+								<input type='hidden' name='action' value='restore'>
+								<input type='hidden' name='username' value='$_POST[username]'>
+								<input type='hidden' name='password' value='$_POST[password]'>
+								<span class='row button'> <input type='submit' value='Back'> </span>
+							</form>
+							<form action='db-backup.php' method='post' enctype='multipart/form-data' id='restoreForm'>
+								<h4> $uploadInfo </h4>
+
+								<input type='hidden' name='action' value='upload-file'>
+								<input type='hidden' name='username' value='$_POST[username]'>
+								<input type='hidden' name='password' value='$_POST[password]'>
 								<span class='row button'> <input type='submit' value='Restore'> </span>
 							</form>
 						</body>
@@ -228,16 +312,14 @@
 
 				echo $html;
 			}
-			elseif ($_POST[action] == 'restore-file'){
-				echo "Hi there";
-			}
 		}
+			//if login with wrong username or password
 		else {
 			$html =	"
 				<html>
 					<head>
 						<title>
-							Potatoes Backup Restore
+							Potatoes Backup-Restore
 						</title>
 						<style>
 							h1, h2, h3, h4, h5 {
@@ -275,7 +357,7 @@
 					</head>
 					<body>
 
-						<h2> Data Backup </h2>
+						<h2> Potatoes Data Backup </h2>
 						<div id='actions'> 
 							<h3> Error! </br> Invalid Username or Password </h3>
 							<div id='buttons'>
