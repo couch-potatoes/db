@@ -64,7 +64,7 @@
 					</style>
 				</head>
 				<body>
-					<h2> Data Backup </h2>
+					<h2> Potatoes Data Backup </h2>
 					<h3> Administrator Login </h3>
 					<form action='db-backup.php' method='post' id='loginForm'>
 						<input type='hidden' name='action' value='login'>
