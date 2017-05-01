@@ -23,7 +23,7 @@
 		$startDate = date_format(new DateTime($_POST["startDate"]), 'Y-m-d');
 		$endDate = date_format(new DateTime($_POST["endDate"]), 'Y-m-d');
 		$gender = $_POST["gender"];
-		$sport = $_POST["sport"];
+		$sport = $_POST["sports"];
 		$type = $_POST["chart"];
 
         	//handle POST request for nutrition data
@@ -167,7 +167,7 @@
 		$startDate = date_format(new DateTime($_GET["startDate"]), 'Y-m-d');
 		$endDate = date_format(new DateTime($_GET["endDate"]), 'Y-m-d');
 		$gender = $_GET["gender"];
-		$sport = $_GET["sport"];
+		$sport = $_GET["sports"];
 		$type = $_GET["chart"];
 
 			//handle request for nutrition
