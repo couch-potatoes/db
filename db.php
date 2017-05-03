@@ -11,7 +11,7 @@
  	$database = getenv(database);
 
  		//use login.php for local
- 	//include 'login.php';
+ 	include 'login.php';
 
  		//sql connection information
 	$conn = new mysqli($servername, $username, $password, $database);
@@ -41,7 +41,7 @@
 
 				//add sport if user chooses it
 			if ($sports != 'na'){ 
-				$sports_arr = explode('', $sports);
+				$sports_arr = explode(' ', $sports);
 				for ($i=0; $i < count($sports_arr); $i++){
 					if ($i==0) $query .= " AND ( sports LIKE '%$sports_arr[$i]%'";
 					else $query .= " OR sports LIKE '%$sports_arr[$i]%' ";
@@ -109,7 +109,7 @@
 
 				//add sport if user chooses
 			if ($sports != 'na'){ 
-				$sports_arr = explode('', $sports);
+				$sports_arr = explode(' ', $sports);
 				for ($i=0; $i < count($sports_arr); $i++){
 					if ($i==0) $query .= " AND ( sports LIKE '%$sports_arr[$i]%'";
 					else $query .= " OR sports LIKE '%$sports_arr[$i]%' ";
@@ -185,7 +185,7 @@
 
 				//add sport if user requested
 			if ($sports != 'na'){ 
-				$sports_arr = explode('', $sports);
+				$sports_arr = explode(' ', $sports);
 				for ($i=0; $i < count($sports); $i++){
 					if ($i==0) $query .= " AND ( sports LIKE '%$sports_arr[$i]%'";
 					else $query .= " OR sports LIKE '%$sports_arr[$i]%' ";
@@ -314,7 +314,7 @@
 
 				//add sport(s)
 			if ($sports != 'na'){ 
-				$sports_arr = explode('', $sports);
+				$sports_arr = explode(' ', $sports);
 				for ($i=0; $i < count($sports); $i++){
 					if ($i==0) $query .= " AND ( sports LIKE '%$sports_arr[$i]%'";
 					else $query .= " OR sports LIKE '%$sports_arr[$i]%' ";
