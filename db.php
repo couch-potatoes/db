@@ -32,8 +32,8 @@
 		if ($_POST["startDate"] != null){$s = explode(' ', $_POST["startDate"]);}
 		elseif ($_POST["startdate"] != null){$s = explode(' ', $_POST["startdate"]);}
 		elseif ($_POST["StartDate"] != null){$s = explode(' ', $_POST["StartDate"]);}
-		elseif ($_POST["Startdate"] != null){$s = explode(' ', $_POST["StartDate"]);}
-		for($i=0; $i<count($s) && $i<3; $i++) $sdate .= $s[$i].' ';
+		elseif ($_POST["Startdate"] != null){$s = explode(' ', $_POST["Startdate"]);}
+		for($i=0; $i<count($s) && $i<4; $i++) $sdate .= $s[$i].' ';
 		$startDate = date_format(new DateTime($sdate), 'Y-m-d');
 
 			//get end date
@@ -41,7 +41,7 @@
 		elseif ($_POST["enddate"] != null){$e = explode(' ', $_POST["enddate"]);}
 		elseif ($_POST["EndDate"] != null){$e = explode(' ', $_POST["EndDate"]);}
 		elseif ($_POST["Enddate"] != null){$e = explode(' ', $_POST["Enddate"]);}
-		for($i=0; $i<count($e) && $i<3; $i++) $sdate .= $e[$i].' ';
+		for($i=0; $i<count($e) && $i<4; $i++) $sdate .= $e[$i].' ';
 		$endDate = date_format(new DateTime($edate), 'Y-m-d');
 		
 			//get others
@@ -199,8 +199,8 @@
 		if ($_GET["startDate"] != null){$s = explode(' ', $_GET["startDate"]);}
 		elseif ($_GET["startdate"] != null){$s = explode(' ', $_GET["startdate"]);}
 		elseif ($_GET["StartDate"] != null){$s = explode(' ', $_GET["StartDate"]);}
-		elseif ($_GET["Startdate"] != null){$s = explode(' ', $_GET["StartDate"]);}
-		for($i=0; $i<count($s) && $i<3; $i++) $sdate .= $s[$i].' ';
+		elseif ($_GET["Startdate"] != null){$s = explode(' ', $_GET["Startdate"]);}
+		for($i=0; $i<count($s) && $i<4; $i++) $sdate .= $s[$i].' ';
 		$startDate = date_format(new DateTime($sdate), 'Y-m-d');
 
 			//get end date
@@ -208,7 +208,7 @@
 		elseif ($_GET["enddate"] != null){$e = explode(' ', $_GET["enddate"]);}
 		elseif ($_GET["EndDate"] != null){$e = explode(' ', $_GET["EndDate"]);}
 		elseif ($_GET["Enddate"] != null){$e = explode(' ', $_GET["Enddate"]);}
-		for($i=0; $i<count($e) && $i<3; $i++) $sdate .= $e[$i].' ';
+		for($i=0; $i<count($e) && $i<4; $i++) $sdate .= $e[$i].' ';
 		$endDate = date_format(new DateTime($edate), 'Y-m-d');
 		
 			//get others
