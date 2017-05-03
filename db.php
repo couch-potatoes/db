@@ -20,8 +20,8 @@
 	if ($_SERVER['REQUEST_METHOD'] === 'POST'){
 
 			//requests from the front end
-		$startDate = date_format(new DateTime($_POST["startDate"]), 'Y-m-d');
-		$endDate = date_format(new DateTime($_POST["endDate"]), 'Y-m-d');
+		$startDate = date_format(new DateTime($_POST["startdate"]), 'Y-m-d');
+		$endDate = date_format(new DateTime($_POST["enddate"]), 'Y-m-d');
 		$gender = $_POST["gender"];
 		$sports = $_POST["sports"];
 		$type = $_POST["chart"];
@@ -164,8 +164,8 @@
 		error_reporting(E_ERROR);
 
 			//extract values from URL
-		$startDate = date_format(new DateTime($_GET["startDate"]), 'Y-m-d');
-		$endDate = date_format(new DateTime($_GET["endDate"]), 'Y-m-d');
+		$startDate = date_format(new DateTime($_GET["startdate"]), 'Y-m-d');
+		$endDate = date_format(new DateTime($_GET["enddate"]), 'Y-m-d');
 		$gender = $_GET["gender"];
 		$sports = $_GET["sports"];
 		$type = $_GET["chart"];
