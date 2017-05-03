@@ -383,7 +383,7 @@
 		else {
 
 				//setup filename
-			$filename = 'data_backup_' . date("Y-m-d_h-m-s") . '.potatoe';
+			$filename = 'data_backup_' . date("Y-m-d_h-m-s") . '.potato';
 
 				//create file header
 			header('Content-Type: text/x-sql');

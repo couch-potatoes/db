@@ -1,14 +1,14 @@
 <?php
 
-	error_reporting(0);
+	//error_reporting(0);
 
  	header('Access-Control-Allow-Origin: *');
 
  		//use environment variables from Heroku
- 	$servername = getenv(servername);
+/* 	$servername = getenv(servername);
  	$username = getenv(username);
  	$password = getenv(password);
- 	$database = getenv(database);
+ 	$database = getenv(database);*/
 
  		//use login.php for local
  	include 'login.php';
@@ -23,7 +23,7 @@
 		$startDate = date_format(new DateTime($_POST["startDate"]), 'Y-m-d');
 		$endDate = date_format(new DateTime($_POST["endDate"]), 'Y-m-d');
 		$gender = $_POST["gender"];
-		$sport = $_POST["sports"];
+		$sports = $_POST["sports"];
 		$type = $_POST["chart"];
 
         	//handle POST request for nutrition data
@@ -40,11 +40,11 @@
 			}
 
 				//add sport if user chooses it
-			if ($sport != 'na'){ 
-				$sports = explode(' ', $sport);
-				for ($i=0; $i < count($sports); $i++){
-					if ($i==0) $query .= " AND ( sports LIKE '%$sports[$i]%'";
-					else $query .= " OR sports LIKE '%$sports[$i]%' ";
+			if ($sports != 'na'){ 
+				$sports_arr = explode('', $sports);
+				for ($i=0; $i < count($sports_arr); $i++){
+					if ($i==0) $query .= " AND ( sports LIKE '%$sports_arr[$i]%'";
+					else $query .= " OR sports LIKE '%$sports_arr[$i]%' ";
 				}
 				$query .= ")";
 			}
@@ -108,11 +108,11 @@
 			}
 
 				//add sport if user chooses
-			if ($sport != 'na'){ 
-				$sports = explode(' ', $sport);
-				for ($i=0; $i < count($sports); $i++){
-					if ($i==0) $query .= " AND ( sports LIKE '%$sports[$i]%'";
-					else $query .= " OR sports LIKE '%$sports[$i]%' ";
+			if ($sports != 'na'){ 
+				$sports_arr = explode('', $sports);
+				for ($i=0; $i < count($sports_arr); $i++){
+					if ($i==0) $query .= " AND ( sports LIKE '%$sports_arr[$i]%'";
+					else $query .= " OR sports LIKE '%$sports_arr[$i]%' ";
 				}
 				$query .= ")";
 			}
@@ -167,7 +167,7 @@
 		$startDate = date_format(new DateTime($_GET["startDate"]), 'Y-m-d');
 		$endDate = date_format(new DateTime($_GET["endDate"]), 'Y-m-d');
 		$gender = $_GET["gender"];
-		$sport = $_GET["sports"];
+		$sports = $_GET["sports"];
 		$type = $_GET["chart"];
 
 			//handle request for nutrition
@@ -184,11 +184,11 @@
 			}
 
 				//add sport if user requested
-			if ($sport != 'na'){ 
-				$sports = explode(' ', $sport);
+			if ($sports != 'na'){ 
+				$sports_arr = explode('', $sports);
 				for ($i=0; $i < count($sports); $i++){
-					if ($i==0) $query .= " AND ( sports LIKE '%$sports[$i]%'";
-					else $query .= " OR sports LIKE '%$sports[$i]%' ";
+					if ($i==0) $query .= " AND ( sports LIKE '%$sports_arr[$i]%'";
+					else $query .= " OR sports LIKE '%$sports_arr[$i]%' ";
 				}
 				$query .= ")";
 			}
@@ -230,7 +230,7 @@
 							//force download
 						$fp = fopen('php://output', 'w');
 						
-						fputcsv($fp, ["From $startDate To $endDate | Gender: ". strtoupper($gender) ." | Sport(s): ". strtoupper($sport)]);
+						fputcsv($fp, ["From $startDate To $endDate | Gender: ". strtoupper($gender) ." | Sport(s): ". strtoupper($sports)]);
 							
 							//add data
 						foreach($result as $row){
@@ -274,7 +274,7 @@
 								<h2> Data in Table View </h2>
 								<h3>
 									From $startDate To $endDate |
-									Gender: ". strtoupper($gender) ." | Sport(s): ". strtoupper($sport) ."
+									Gender: ". strtoupper($gender) ." | Sport(s): ". strtoupper($sports) ."
 								</h3> 
 							<table>";
 
@@ -313,11 +313,11 @@
 			}
 
 				//add sport(s)
-			if ($sport != 'na'){ 
-				$sports = explode(' ', $sport);
+			if ($sports != 'na'){ 
+				$sports_arr = explode('', $sports);
 				for ($i=0; $i < count($sports); $i++){
-					if ($i==0) $query .= " AND ( sports LIKE '%$sports[$i]%'";
-					else $query .= " OR sports LIKE '%$sports[$i]%' ";
+					if ($i==0) $query .= " AND ( sports LIKE '%$sports_arr[$i]%'";
+					else $query .= " OR sports LIKE '%$sports_arr[$i]%' ";
 				}
 				$query .= ")";
 			}
@@ -361,7 +361,7 @@
 							//force download
 						$fp = fopen('php://output', 'w');
 
-						fputcsv($fp, ["From $startDate To $endDate | Gender: ". strtoupper($gender) ." | Sport(s): ". strtoupper($sport)]);
+						fputcsv($fp, ["From $startDate To $endDate | Gender: ". strtoupper($gender) ." | Sport(s): ". strtoupper($sports)]);
 
 							//put data in CSV file
 						foreach($result as $row){
@@ -404,7 +404,7 @@
 								<h2> Data in Table View </h2>
 								<h3>
 									From $startDate To $endDate |
-									Gender: ". strtoupper($gender) ." | Sport(s): ". strtoupper($sport) ."
+									Gender: ". strtoupper($gender) ." | Sport(s): ". strtoupper($sports) ."
 								</h3> 
 							<table>";
 						
