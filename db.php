@@ -11,7 +11,7 @@
  	$database = getenv(database);
 
  		//use login.php for local
- 	include 'login.php';
+ 	//include 'login.php';
 
  		//sql connection information
 	$conn = new mysqli($servername, $username, $password, $database);
@@ -21,18 +21,30 @@
 
 		$startDate = '';
 		$endDate = '';
+		$s = '';
+		$sdate = '';
+		$e = '';
+		$edate = '';
 
-			//requests from the front end
-		if ($_POST["startDate"] != null){$startDate = date_format(new DateTime($_POST["startDate"]), 'Y-m-d');}
-		elseif ($_POST["startdate"] != null){$startDate = date_format(new DateTime($_POST["startdate"]), 'Y-m-d');}
-		elseif ($_POST["StartDate"] != null){$startDate = date_format(new DateTime($_POST["StartDate"]), 'Y-m-d');}
-		elseif ($_POST["Startdate"] != null){$startDate = date_format(new DateTime($_POST["Startdate"]), 'Y-m-d');}
+			//extract values from URL
 
-		if ($_POST["endDate"] != null){$endDate = date_format(new DateTime($_POST["endDate"]), 'Y-m-d');}
-		elseif ($_POST["enddate"] != null){$endDate = date_format(new DateTime($_POST["enddate"]), 'Y-m-d');}
-		elseif ($_POST["EndDate"] != null){$endDate = date_format(new DateTime($_POST["EndDate"]), 'Y-m-d');}
-		elseif ($_POST["Enddate"] != null){$endDate = date_format(new DateTime($_POST["Enddate"]), 'Y-m-d');}
+			//get start date
+		if ($_POST["startDate"] != null){$s = explode(' ', $_POST["startDate"]);}
+		elseif ($_POST["startdate"] != null){$s = explode(' ', $_POST["startdate"]);}
+		elseif ($_POST["StartDate"] != null){$s = explode(' ', $_POST["StartDate"]);}
+		elseif ($_POST["Startdate"] != null){$s = explode(' ', $_POST["StartDate"]);}
+		for($i=0; $i<count($s) && $i<3; $i++) $sdate .= $s[$i].' ';
+		$startDate = date_format(new DateTime($sdate), 'Y-m-d');
 
+			//get end date
+		if ($_POST["endDate"] != null){$e = explode(' ', $_POST["endDate"]);}
+		elseif ($_POST["enddate"] != null){$e = explode(' ', $_POST["enddate"]);}
+		elseif ($_POST["EndDate"] != null){$e = explode(' ', $_POST["EndDate"]);}
+		elseif ($_POST["Enddate"] != null){$e = explode(' ', $_POST["Enddate"]);}
+		for($i=0; $i<count($e) && $i<3; $i++) $sdate .= $e[$i].' ';
+		$endDate = date_format(new DateTime($edate), 'Y-m-d');
+		
+			//get others
 		$gender = $_POST["gender"];
 		$sports = $_POST["sports"];
 		$type = $_POST["chart"];
@@ -176,18 +188,30 @@
 
 		$startDate = '';
 		$endDate = '';
+		$s = '';
+		$sdate = '';
+		$e = '';
+		$edate = '';
 
 			//extract values from URL
-		if ($_GET["startDate"] != null){$startDate = date_format(new DateTime($_GET["startDate"]), 'Y-m-d');}
-		elseif ($_GET["startdate"] != null){$startDate = date_format(new DateTime($_GET["startdate"]), 'Y-m-d');}
-		elseif ($_GET["StartDate"] != null){$startDate = date_format(new DateTime($_GET["StartDate"]), 'Y-m-d');}
-		elseif ($_GET["Startdate"] != null){$startDate = date_format(new DateTime($_GET["Startdate"]), 'Y-m-d');}
 
-		if ($_GET["endDate"] != null){$endDate = date_format(new DateTime($_GET["endDate"]), 'Y-m-d');}
-		elseif ($_GET["enddate"] != null){$endDate = date_format(new DateTime($_GET["enddate"]), 'Y-m-d');}
-		elseif ($_GET["EndDate"] != null){$endDate = date_format(new DateTime($_GET["EndDate"]), 'Y-m-d');}
-		elseif ($_GET["Enddate"] != null){$endDate = date_format(new DateTime($_GET["Enddate"]), 'Y-m-d');}
+			//get start date
+		if ($_GET["startDate"] != null){$s = explode(' ', $_GET["startDate"]);}
+		elseif ($_GET["startdate"] != null){$s = explode(' ', $_GET["startdate"]);}
+		elseif ($_GET["StartDate"] != null){$s = explode(' ', $_GET["StartDate"]);}
+		elseif ($_GET["Startdate"] != null){$s = explode(' ', $_GET["StartDate"]);}
+		for($i=0; $i<count($s) && $i<3; $i++) $sdate .= $s[$i].' ';
+		$startDate = date_format(new DateTime($sdate), 'Y-m-d');
+
+			//get end date
+		if ($_GET["endDate"] != null){$e = explode(' ', $_GET["endDate"]);}
+		elseif ($_GET["enddate"] != null){$e = explode(' ', $_GET["enddate"]);}
+		elseif ($_GET["EndDate"] != null){$e = explode(' ', $_GET["EndDate"]);}
+		elseif ($_GET["Enddate"] != null){$e = explode(' ', $_GET["Enddate"]);}
+		for($i=0; $i<count($e) && $i<3; $i++) $sdate .= $e[$i].' ';
+		$endDate = date_format(new DateTime($edate), 'Y-m-d');
 		
+			//get others
 		$gender = $_GET["gender"];
 		$sports = $_GET["sports"];
 		$type = $_GET["chart"];

@@ -219,12 +219,12 @@
 								<span class='row button'> <input type='submit' value='Back'> </span>
 							</form>
 							<form action='db-backup.php' method='post' id='restoreForm'>
-								<h4> Upload a backup file to restore. <br/>(extention must be .sql or .potatoe) </h4>
+								<h4> Upload a backup file to restore. <br/>(extention must be .sql or .potato) </h4>
 
 								<input type='hidden' name='action' value='upload-file'>
 								<input type='hidden' name='username' value='$_POST[username]'>
 								<input type='hidden' name='password' value='$_POST[password]'>
-								<span class='row'> <input type='file' name='backup_file' id='backup_file' accept='.sql, .potatoe, .jpg, .png'> </span>
+								<span class='row'> <input type='file' name='backup_file' id='backup_file' accept='.sql, .potato'> </span>
 								<span class='row button'> <input type='submit' name='submit' value='Upload'> </span>
 							</form>
 						</body>
