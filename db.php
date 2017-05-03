@@ -1,17 +1,17 @@
 <?php
 
-	//error_reporting(0);
+	error_reporting(0);
 
  	header('Access-Control-Allow-Origin: *');
 
  		//use environment variables from Heroku
-/* 	$servername = getenv(servername);
+ 	$servername = getenv(servername);
  	$username = getenv(username);
  	$password = getenv(password);
- 	$database = getenv(database);*/
+ 	$database = getenv(database);
 
  		//use login.php for local
- 	include 'login.php';
+ 	//include 'login.php';
 
  		//sql connection information
 	$conn = new mysqli($servername, $username, $password, $database);

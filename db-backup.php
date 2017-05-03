@@ -14,7 +14,7 @@
  	$login_pass = getenv(login_pass);
 
  		//use login.php for local development
- 	include 'login.php';
+ 	//include 'login.php';
 
  		//sql connection information
 	$conn = new mysqli($servername, $username, $password, $database);
