@@ -11,7 +11,7 @@
  	$database = getenv(database);
 
  		//use login.php for local
- 	//include 'login.php';
+ 	include 'login.php';
 
  		//sql connection information
 	$conn = new mysqli($servername, $username, $password, $database);
@@ -19,9 +19,20 @@
 		//handle POST requests from clients
 	if ($_SERVER['REQUEST_METHOD'] === 'POST'){
 
+		$startDate = '';
+		$endDate = '';
+
 			//requests from the front end
-		$startDate = date_format(new DateTime($_POST["startdate"]), 'Y-m-d');
-		$endDate = date_format(new DateTime($_POST["enddate"]), 'Y-m-d');
+		if ($_POST["startDate"] != null){$startDate = date_format(new DateTime($_POST["startDate"]), 'Y-m-d');}
+		elseif ($_POST["startdate"] != null){$startDate = date_format(new DateTime($_POST["startdate"]), 'Y-m-d');}
+		elseif ($_POST["StartDate"] != null){$startDate = date_format(new DateTime($_POST["StartDate"]), 'Y-m-d');}
+		elseif ($_POST["Startdate"] != null){$startDate = date_format(new DateTime($_POST["Startdate"]), 'Y-m-d');}
+
+		if ($_POST["endDate"] != null){$endDate = date_format(new DateTime($_POST["endDate"]), 'Y-m-d');}
+		elseif ($_POST["enddate"] != null){$endDate = date_format(new DateTime($_POST["enddate"]), 'Y-m-d');}
+		elseif ($_POST["EndDate"] != null){$endDate = date_format(new DateTime($_POST["EndDate"]), 'Y-m-d');}
+		elseif ($_POST["Enddate"] != null){$endDate = date_format(new DateTime($_POST["Enddate"]), 'Y-m-d');}
+
 		$gender = $_POST["gender"];
 		$sports = $_POST["sports"];
 		$type = $_POST["chart"];
@@ -163,9 +174,20 @@
 	elseif ($_SERVER['REQUEST_METHOD'] === 'GET'){
 		error_reporting(E_ERROR);
 
+		$startDate = '';
+		$endDate = '';
+
 			//extract values from URL
-		$startDate = date_format(new DateTime($_GET["startdate"]), 'Y-m-d');
-		$endDate = date_format(new DateTime($_GET["enddate"]), 'Y-m-d');
+		if ($_GET["startDate"] != null){$startDate = date_format(new DateTime($_GET["startDate"]), 'Y-m-d');}
+		elseif ($_GET["startdate"] != null){$startDate = date_format(new DateTime($_GET["startdate"]), 'Y-m-d');}
+		elseif ($_GET["StartDate"] != null){$startDate = date_format(new DateTime($_GET["StartDate"]), 'Y-m-d');}
+		elseif ($_GET["Startdate"] != null){$startDate = date_format(new DateTime($_GET["Startdate"]), 'Y-m-d');}
+
+		if ($_GET["endDate"] != null){$endDate = date_format(new DateTime($_GET["endDate"]), 'Y-m-d');}
+		elseif ($_GET["enddate"] != null){$endDate = date_format(new DateTime($_GET["enddate"]), 'Y-m-d');}
+		elseif ($_GET["EndDate"] != null){$endDate = date_format(new DateTime($_GET["EndDate"]), 'Y-m-d');}
+		elseif ($_GET["Enddate"] != null){$endDate = date_format(new DateTime($_GET["Enddate"]), 'Y-m-d');}
+		
 		$gender = $_GET["gender"];
 		$sports = $_GET["sports"];
 		$type = $_GET["chart"];
